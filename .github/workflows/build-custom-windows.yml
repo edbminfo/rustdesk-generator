@@ -81,6 +81,7 @@ jobs:
           repository: ${{ github.event.inputs.rustdesk_repo }}
           ref: ${{ github.event.inputs.rustdesk_ref }}
           submodules: recursive
+          token: ${{ secrets.GH_PAT || github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
