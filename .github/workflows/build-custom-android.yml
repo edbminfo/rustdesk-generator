@@ -233,7 +233,7 @@ jobs:
           if [ -f "$UNI_PLUGIN" ]; then
             echo "  Patching uni_links for v2 embedding"
             sed -i '/import io.flutter.plugin.common.PluginRegistry/d' "$UNI_PLUGIN"
-            sed -i 's/, PluginRegistry.NewIntentListener//' "$UNI_PLUGIN"
+            sed -i '/PluginRegistry.NewIntentListener/d' "$UNI_PLUGIN"
             sed -i '/addOnNewIntentListener(this)/d' "$UNI_PLUGIN"
             sed -i '/^    @Override$/{N;s/    @Override\n    public boolean onNewIntent/    public boolean onNewIntent/}' "$UNI_PLUGIN"
             START=$(grep -n 'public static void registerWith' "$UNI_PLUGIN" | head -1 | cut -d: -f1)
@@ -346,7 +346,7 @@ jobs:
           if [ -f "$UNI_PLUGIN" ]; then
             echo "  Patching uni_links for v2 embedding"
             sed -i '/import io.flutter.plugin.common.PluginRegistry/d' "$UNI_PLUGIN"
-            sed -i 's/, PluginRegistry.NewIntentListener//' "$UNI_PLUGIN"
+            sed -i '/PluginRegistry.NewIntentListener/d' "$UNI_PLUGIN"
             sed -i '/addOnNewIntentListener(this)/d' "$UNI_PLUGIN"
             sed -i '/^    @Override$/{N;s/    @Override\n    public boolean onNewIntent/    public boolean onNewIntent/}' "$UNI_PLUGIN"
             START=$(grep -n 'public static void registerWith' "$UNI_PLUGIN" | head -1 | cut -d: -f1)
