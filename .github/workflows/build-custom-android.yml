@@ -202,6 +202,7 @@ jobs:
           export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH
           sed -i 's/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g' ./flutter/android/gradle.properties
           sed -i 's/signingConfigs.release/signingConfigs.debug/g' ./flutter/android/app/build.gradle
+          echo "kotlin.jvm.target=17" >> ./flutter/android/gradle.properties
 
           ABI_DIR=${{ matrix.arch.abi }}
           NDK_SYSROOT=${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
@@ -320,6 +321,7 @@ jobs:
           export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH
           sed -i 's/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g' ./flutter/android/gradle.properties
           sed -i 's/signingConfigs.release/signingConfigs.debug/g' ./flutter/android/app/build.gradle
+          echo "kotlin.jvm.target=17" >> ./flutter/android/gradle.properties
 
           for dir in arm64-v8a armeabi-v7a x86_64; do
             so="./flutter/android/app/src/main/jniLibs/$dir/liblibrustdesk.so"
