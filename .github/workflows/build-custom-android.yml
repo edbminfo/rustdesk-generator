@@ -203,25 +203,8 @@ jobs:
           sed -i 's/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g' ./flutter/android/gradle.properties
           sed -i 's/signingConfigs.release/signingConfigs.debug/g' ./flutter/android/app/build.gradle
           echo "kotlin.jvm.target=17" >> ./flutter/android/gradle.properties
-          cat > ./flutter/android/settings.gradle.kts << 'EOF'
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-rootProject.name = "Android"
-include(":app")
-EOF
           rm -f ./flutter/android/settings.gradle
+          printf 'pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = "Android"\ninclude(":app")\n' > ./flutter/android/settings.gradle.kts
 
           ABI_DIR=${{ matrix.arch.abi }}
           NDK_SYSROOT=${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/sysroot
@@ -341,25 +324,8 @@ EOF
           sed -i 's/org.gradle.jvmargs=-Xmx1024M/org.gradle.jvmargs=-Xmx2g/g' ./flutter/android/gradle.properties
           sed -i 's/signingConfigs.release/signingConfigs.debug/g' ./flutter/android/app/build.gradle
           echo "kotlin.jvm.target=17" >> ./flutter/android/gradle.properties
-          cat > ./flutter/android/settings.gradle.kts << 'EOF'
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-rootProject.name = "Android"
-include(":app")
-EOF
           rm -f ./flutter/android/settings.gradle
+          printf 'pluginManagement {\n    repositories {\n        google()\n        mavenCentral()\n        gradlePluginPortal()\n    }\n}\ndependencyResolutionManagement {\n    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)\n    repositories {\n        google()\n        mavenCentral()\n    }\n}\nrootProject.name = "Android"\ninclude(":app")\n' > ./flutter/android/settings.gradle.kts
 
           for dir in arm64-v8a armeabi-v7a x86_64; do
             so="./flutter/android/app/src/main/jniLibs/$dir/liblibrustdesk.so"
