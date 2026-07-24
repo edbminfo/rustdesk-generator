@@ -228,12 +228,14 @@ jobs:
             fi
           done
 
-          # uni_links 0.5.1 uses deprecated v1 Android embedding; remove PluginRegistry import + method
+          # uni_links 0.5.1 uses deprecated v1 Android embedding; patch for v2 compatibility
           UNI_PLUGIN="$HOME/.pub-cache/hosted/pub.dev/uni_links-0.5.1/android/src/main/java/name/avioli/unilinks/UniLinksPlugin.java"
           if [ -f "$UNI_PLUGIN" ]; then
             echo "  Patching uni_links for v2 embedding"
             sed -i '/import io.flutter.plugin.common.PluginRegistry/d' "$UNI_PLUGIN"
-            # Delete the registerWith method block (from "public static void registerWith" to matching "}")
+            sed -i 's/, PluginRegistry.NewIntentListener//' "$UNI_PLUGIN"
+            sed -i '/addOnNewIntentListener(this)/d' "$UNI_PLUGIN"
+            sed -i '/^    @Override$/{N;s/    @Override\n    public boolean onNewIntent/    public boolean onNewIntent/}' "$UNI_PLUGIN"
             START=$(grep -n 'public static void registerWith' "$UNI_PLUGIN" | head -1 | cut -d: -f1)
             if [ -n "$START" ]; then
               END=$(tail -n +$START "$UNI_PLUGIN" | grep -n '^    }' | head -1 | cut -d: -f1)
@@ -339,12 +341,14 @@ jobs:
             fi
           done
 
-          # uni_links 0.5.1 uses deprecated v1 Android embedding; remove PluginRegistry import + method
+          # uni_links 0.5.1 uses deprecated v1 Android embedding; patch for v2 compatibility
           UNI_PLUGIN="$HOME/.pub-cache/hosted/pub.dev/uni_links-0.5.1/android/src/main/java/name/avioli/unilinks/UniLinksPlugin.java"
           if [ -f "$UNI_PLUGIN" ]; then
             echo "  Patching uni_links for v2 embedding"
             sed -i '/import io.flutter.plugin.common.PluginRegistry/d' "$UNI_PLUGIN"
-            # Delete the registerWith method block (from "public static void registerWith" to matching "}")
+            sed -i 's/, PluginRegistry.NewIntentListener//' "$UNI_PLUGIN"
+            sed -i '/addOnNewIntentListener(this)/d' "$UNI_PLUGIN"
+            sed -i '/^    @Override$/{N;s/    @Override\n    public boolean onNewIntent/    public boolean onNewIntent/}' "$UNI_PLUGIN"
             START=$(grep -n 'public static void registerWith' "$UNI_PLUGIN" | head -1 | cut -d: -f1)
             if [ -n "$START" ]; then
               END=$(tail -n +$START "$UNI_PLUGIN" | grep -n '^    }' | head -1 | cut -d: -f1)
